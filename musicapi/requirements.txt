@@ -1,0 +1,26 @@
+asgiref==3.10.0
+Django==5.2.7
+djangorestframework==3.16.1
+graphene==3.4.3
+graphene-django==3.2.3
+graphql-core==3.2.7
+graphql-relay==3.2.0
+promise==2.3
+psycopg2-binary==2.9.11
+python-dateutil==2.9.0.post0
+six==1.17.0
+sqlparse==0.5.3
+text-unidecode==1.3
+typing_extensions==4.15.0
+djangorestframework-simplejwt==5.3.0
+django-oauth-toolkit==2.4.0
+
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MzEyNTY0MiwiaWF0IjoxNzYzMDM5MjQyLCJqdGkiOiI3ZWNhMGJlZmFiMjI0ZGIzOTc4ZGRmMzU5YWE2YWViYiIsInVzZXJfaWQiOjMzfQ.6dDiNZjCVElMjH1VwRMC9PbIc8bMawiZrWsQL8H4LkY",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYzMDQyODQyLCJpYXQiOjE3NjMwMzkyNDIsImp0aSI6IjkzNjliYjllNjNiMTQ2MWY4YWNjY2RiMWM1YmYzMjEyIiwidXNlcl9pZCI6MzN9.n42dL9ZwLTE9VpO-sQVUabGiH74fFbXZg45iBA9N778"
+
+    "After refresh"
+     "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYzMDQzMzkxLCJpYXQiOjE3NjMwMzkyNDIsImp0aSI6ImQ2ODNkMTgwMjJhNDRhZmU5NGYxNzYzYjY3YTNjNWJkIiwidXNlcl9pZCI6MzN9.76XDUNdPiz-8fZc6IB78N_Wo8mOYyLLJIkKxb0HrB9E"
+     
+     "Secret client" : WAHyp37KP11Gvl8ZPtUDbv6YjITRWyz7MALxu1hOq0FzDWTyQmeDrvSy3dgrFssKv5hyBwWJH4fmhBdkoW5I57Pjrk6VxU3ylHaCfRr0buXAr3NwXkRsROHS2TjKxtYm
+    
+    "Identifiant du client" :ls3z1oCUjQGHJJPBqiNHDgoJnh42SyMjI4gsiTiK

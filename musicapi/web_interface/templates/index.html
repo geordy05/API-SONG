@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Accueil - MusicAPI{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Bienvenue sur MusicAPI</h2>
+    <p>Cette application vous permet de gérer une bibliothèque musicale et des playlists.</p>
+    
+    <h3>🎸 API Catalog (REST)</h3>
+    <p>Gérez les artistes, albums et chansons via une API REST.</p>
+    <ul>
+        <li><strong>Artists</strong> : <code>GET /api/catalog/artists/</code></li>
+        <li><strong>Albums</strong> : <code>GET /api/catalog/albums/</code></li>
+        <li><strong>Songs</strong> : <code>GET /api/catalog/songs/</code></li>
+    </ul>
+    <a href="/catalog/"><button>Explorer le Catalog</button></a>
+    
+    <h3 style="margin-top: 2rem;">🎵 API Playlist (GraphQL)</h3>
+    <p>Créez et gérez vos playlists via une API GraphQL.</p>
+    <ul>
+        <li><strong>GraphiQL</strong> : <code>/graphql/</code></li>
+        <li><strong>Queries</strong> : allPlaylists, playlist, publicPlaylists</li>
+        <li><strong>Mutations</strong> : createPlaylist, addSongToPlaylist, etc.</li>
+    </ul>
+    <a href="/playlists/"><button>Gérer les Playlists</button></a>
+    
+    <h3 style="margin-top: 2rem;">📖 Documentation</h3>
+    <ul>
+        <li><a href="/api/catalog/" target="_blank">Browsable API (REST)</a></li>
+        <li><a href="/graphql/" target="_blank">GraphiQL (GraphQL)</a></li>
+    </ul>
+</div>
+{% endblock %}

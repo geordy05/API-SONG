@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Playlists - MusicAPI{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Playlists (GraphQL API)</h2>
+    <div>
+        <button onclick="loadPlaylists()">Charger les Playlists</button>
+        <button onclick="loadPublicPlaylists()">Playlists Publiques</button>
+    </div>
+    <div id="results"></div>
+</div>
+
+<script>
+const GRAPHQL_ENDPOINT = '/graphql/';
+
+async function graphqlQuery(query) {
+    const response = await fetch(GRAPHQL_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+    });
+    const data = await response.json();
+    return data.data;
+}
+
+async function loadPlaylists() {
+    const query = `
+        query { allPlaylists { id name user { username } songCount isPublic } }
+    `;
+    const data = await graphqlQuery(query);
+    displayPlaylists('Toutes les Playlists', data.allPlaylists);
+}
+
+async function loadPublicPlaylists() {
+    const query = `
+        query { publicPlaylists { id name user { username } songCount isPublic } }
+    `;
+    const data = await graphqlQuery(query);
+    displayPlaylists('Playlists Publiques', data.publicPlaylists);
+}
+
+function displayPlaylists(title, playlists) {
+    let html = `<h3>${title}</h3>`;
+    if (!playlists.length) html += '<p>Aucune playlist.</p>';
+    else {
+        html += '<table><thead><tr>';
+        ['Nom','Utilisateur','Nombre de Chansons','Publique'].forEach(h => html += `<th>${h}</th>`);
+        html += '</tr></thead><tbody>';
+        playlists.forEach(pl => {
+            html += `<tr>
+                <td>${pl.name}</td>
+                <td>${pl.user.username}</td>
+                <td>${pl.songCount}</td>
+                <td>${pl.isPublic ? '✓' : '✗'}</td>
+            </tr>`;
+        });
+        html += '</tbody></table>';
+    }
+    document.getElementById('results').innerHTML = html;
+}
+</script>
+{% endblock %}

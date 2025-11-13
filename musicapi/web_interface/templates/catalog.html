@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Catalog - MusicAPI{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Catalog Musical (REST API)</h2>
+    <div>
+        <button onclick="loadArtists()">Charger les Artistes</button>
+        <button onclick="loadAlbums()">Charger les Albums</button>
+        <button onclick="loadSongs()">Charger les Chansons</button>
+    </div>
+    <div id="results"></div>
+</div>
+
+<script>
+const API_BASE = '/api/catalog';
+
+async function loadArtists() {
+    const response = await fetch(`${API_BASE}/artists/`);
+    const data = await response.json();
+    displayResults('Artistes', data.results || data, ['name', 'country', 'album_count', 'song_count']);
+}
+
+async function loadAlbums() {
+    const response = await fetch(`${API_BASE}/albums/`);
+    const data = await response.json();
+    displayResults('Albums', data.results || data, ['title', 'artist.name', 'release_year', 'genre', 'song_count']);
+}
+
+async function loadSongs() {
+    const response = await fetch(`${API_BASE}/songs/`);
+    const data = await response.json();
+    displayResults('Chansons', data.results || data, ['title', 'artist.name', 'album.title', 'duration_formatted', 'track_number']);
+}
+
+function displayResults(title, items, fields) {
+    let html = `<h3>${title}</h3>`;
+    if (!items.length) html += `<p>Aucun résultat.</p>`;
+    else {
+        html += '<table><thead><tr>';
+        fields.forEach(f => html += `<th>${f}</th>`);
+        html += '</tr></thead><tbody>';
+        items.forEach(item => {
+            html += '<tr>';
+            fields.forEach(f => {
+                let value = f.split('.').reduce((o,k) => o && o[k], item) || '';
+                html += `<td>${value}</td>`;
+            });
+            html += '</tr>';
+        });
+        html += '</tbody></table>';
+    }
+    document.getElementById('results').innerHTML = html;
+}
+</script>
+{% endblock %}
