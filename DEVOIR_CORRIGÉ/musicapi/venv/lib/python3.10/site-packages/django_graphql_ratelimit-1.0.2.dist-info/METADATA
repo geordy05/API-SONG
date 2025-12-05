@@ -1,0 +1,77 @@
+Metadata-Version: 2.1
+Name: django-graphql-ratelimit
+Version: 1.0.2
+Summary: Use django-ratelimit for graphql
+Home-page: https://github.com/o3o3o/django-graphql-ratelimit
+Author: o3o3o
+Author-email: o3o3o.me@gmail.com
+License: Apache Software License
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Description-Content-Type: text/markdown
+Requires-Dist: graphene
+Requires-Dist: graphene-django
+Requires-Dist: django-ratelimit (>=4.0.0)
+Requires-Dist: django-ipware
+
+[![CircleCI](https://circleci.com/gh/o3o3o/django-graphql-ratelimit.svg?style=svg)](https://circleci.com/gh/o3o3o/django-graphql-ratelimit) [![PyPI version](https://badge.fury.io/py/django-graphql-ratelimit.svg)](https://badge.fury.io/py/django-graphql-ratelimit)
+
+Eaiser to use [django-ratelimit](https://github.com/jsocol/django-ratelimit) for graphql in django.
+
+
+# Install
+
+```
+pip install django-graphql-ratelimit
+```
+
+# Usage
+
+ratelimit key support `gql:xxx`, where `xxx` is argument.
+
+```python
+from django_graphql_ratelimit import ratelimit
+
+class RequestSMSCode(graphene.Mutation):
+    class Arguments:
+        phone = graphene.String(required=True)
+
+    ok = graphene.Boolean()
+
+    @ratelimit(key="ip", rate="10/m", block=True)
+    @ratelimit(key="gql:phone", rate="5/m", block=True)
+    def mutate(self, info, phone):
+        request = info.context
+        # send sms code logic
+        return RequestSMSCode(ok=True)
+```
+You can use [django-ratelimit keys](https://django-ratelimit.readthedocs.io/en/latest/keys.html#common-keys) except `get:xxx` and `post:xxx`:
+* `ip`  - Use the request IP address (i.e. `request.META['REMOTE_ADDR']`)
+I suggest you to use [django-ipware](https://github.com/un33k/django-ipware) to get client ip, modify your `MIDDLEWARE` in settings: 
+```
+MIDDLEWARE = [
+"django_graphql_ratelimit.middleware.ParseClientIpMiddleware",
+...
+]
+```
+
+* `header:x-x`   - Use the value of request.META.get('HTTP_X_X', '').
+* `user`  - Use an appropriate value from request.user. Do not use with unauthenticated users.
+* `user_or_ip`   - Use an appropriate value from `request.user` if the user is authenticated, otherwise use `request.META['REMOTE_ADDR']`.
+
+
